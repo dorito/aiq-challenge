@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "mgl"
+version = "0.1.0"
+description = ""
+authors = ["Alice <alice96ferreira@outlook.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.116.1"
+uvicorn = {extras = ["standard"], version = "^0.35.0"}
+pydantic = "^2.11.7"
+tortoise-orm = "^0.25.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
