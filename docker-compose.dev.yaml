@@ -1,0 +1,26 @@
+services:
+  database:
+    image: postgres:13.22-alpine3.22
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+    
+  cache:
+    image: redis:8.2.0
+    restart: always
+
+  api:
+    restart: always
+    depends_on:
+      database:
+        condition: service_started
+    env_file:
+      - .env.dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/code
+    ports:
+      - "${API_PORT:-8883}:8000"
