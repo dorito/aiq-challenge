@@ -12,10 +12,12 @@
 - Execute o seguinte comando: `docker exec -ti aiq_challenge_api pytest`
 
 ## Principais tecnologias utilizadas
+- Python
 - FastAPI para servir os endpoints de maneira assíncrona
 - Redis como cache
 - TortoiseORM como ORM
 - PostgreSQL como banco de dados
+- Pydantic para serialização dos dados
 - Pytest para os testes
 
 ## Estrutura do projeto
