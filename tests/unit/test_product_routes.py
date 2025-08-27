@@ -8,6 +8,7 @@ async def override_product_service(request: Request):
     return MockProductService()
 
 def test_list_products():
+    app.state.testing = True
     app.dependency_overrides[product_service] = override_product_service
     with TestClient(app) as client:
         response = client.get("/product/")
@@ -25,6 +26,7 @@ def test_list_products():
             assert "rating" in item
             
 def test_get_product_by_id():
+    app.state.testing = True
     app.dependency_overrides[product_service] = override_product_service
     with TestClient(app) as client:
         response = client.get("/product/by-id/1")

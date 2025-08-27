@@ -31,7 +31,10 @@ class ProductService:
 
         response = requests.get(f"https://fakestoreapi.com/products/{id}")
         if response.status_code == 200:
-            data = response.json()
-            await self._cache.set(cache_key, json.dumps(data), cache_ttl)
-            return ProductSchema(**data)
+            try:
+                data = response.json()
+                await self._cache.set(cache_key, json.dumps(data), cache_ttl)
+                return ProductSchema(**data)
+            except Exception as e: # existem casos onde o produto apenas é voltado como nulo em vez de 404
+                ...
         raise HTTPException(status_code=404, detail="Product not found")

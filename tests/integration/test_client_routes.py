@@ -4,6 +4,7 @@ from app.main import app
 from data.enums import LoginTokenTypeEnum
 
 def test_add_client():
+    app.state.testing = True
     with TestClient(app) as client:
         response = client.post("/client/", json={"name": "Cliente teste", "email": "user@example.com", "password": "test"})
         assert response.status_code == 201
@@ -15,6 +16,7 @@ def test_add_client():
         assert data['guid'] is not None
 
 def test_add_repeated_client():
+    app.state.testing = True
     with TestClient(app) as client:
         response = client.post("/client/", json={"name": "Cliente teste", "email": "user@example.com", "password": "test"})
         assert response.status_code == 201
@@ -24,6 +26,7 @@ def test_add_repeated_client():
         assert data['detail'] == "Email already registered"
         
 def test_login():
+    app.state.testing = True
     with TestClient(app) as client:
         response = client.post("/client/", json={"name": "Cliente teste", "email": "user@example.com", "password": "test"}) # cria usuário
 
@@ -66,6 +69,7 @@ def test_edit_user():
         assert edited_data['guid'] == created_user_data['guid']
         
 def test_edit_user_with_wrong_password():
+    app.state.testing = True
     with TestClient(app) as client:
         response = client.post("/client/", json={"name": "Cliente teste 1", "email": "user.1@example.com", "password": "test"}) # cria usuário
 
@@ -77,6 +81,7 @@ def test_edit_user_with_wrong_password():
         assert response.json()['detail'] == "Invalid current password"
 
 def test_get_user():
+    app.state.testing = True
     with TestClient(app) as client:
         response = client.post("/client/", json={"name": "Cliente teste 1", "email": "user.1@example.com", "password": "test"}) # cria usuário
         created_user_data = response.json()
@@ -90,12 +95,14 @@ def test_get_user():
         assert data['guid'] == created_user_data['guid']
 
 def test_get_user_that_does_not_exist():
+    app.state.testing = True
     with TestClient(app) as client:
         response = client.get("/client/by-email/fakeuser@example.com")
         assert response.status_code == 404
         assert response.json()['detail'] == "User not found"
 
 def test_delete_user():
+    app.state.testing = True
     with TestClient(app) as client:
         response = client.post("/client/", json={"name": "Cliente teste 1", "email": "user.1@example.com", "password": "test"})
         assert response.status_code == 201
@@ -110,6 +117,7 @@ def test_delete_user():
         assert response.json()['detail'] == "User not found"
 
 def test_delete_user_that_does_not_exist():
+    app.state.testing = True
     with TestClient(app) as client:
         response = client.delete("/client/by-email/nonexistent@example.com")
         assert response.status_code == 404

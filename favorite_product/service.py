@@ -24,9 +24,10 @@ class FavoriteProductService:
         favorite_product = await FavoriteProductModel.get_or_none(product_id=favorite_product_data.product_id, client_guid=client.guid)
         if favorite_product:
             raise HTTPException(status_code=400, detail="Favorite product already exists")
+        product = await self._product_service.get_product(favorite_product_data.product_id)
         favorite_product = FavoriteProductModel(product_id=favorite_product_data.product_id, client_guid=client.guid)
         await favorite_product.save()
-        return await self._product_service.get_product(favorite_product_data.product_id)
+        return product
 
     async def remove_favorite_product(self, product_id: int, client: ClientModel) -> None:
         favorite_product = await FavoriteProductModel.get_or_none(product_id=product_id, client_guid=client.guid)

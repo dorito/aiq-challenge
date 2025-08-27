@@ -9,6 +9,7 @@ async def override_favorite_product_service(request: Request):
     return FavoriteProductService(cache=request.app.cache, product_service=MockProductService())
   
 def test_add_favorite_product_unauthorized():
+    app.state.testing = True
     app.dependency_overrides[favorite_product_service] = override_favorite_product_service
     with TestClient(app) as client:
         response = client.post("/favorite-product/", json={"product_id": 1})
@@ -16,6 +17,7 @@ def test_add_favorite_product_unauthorized():
         assert response.json()['detail'] == "Unauthorized"
 
 def test_add_favorite_product():
+    app.state.testing = True
     app.dependency_overrides[favorite_product_service] = override_favorite_product_service
     with TestClient(app) as client:
         response = client.post("/client/", json={"name": "Usuário", "email": "user@example.com", "password": "password"}) # cria usuário
@@ -56,12 +58,14 @@ def test_add_favorite_product_should_fail_a_second_time():
         assert response.json()['detail'] == "Favorite product already exists"
 
 def test_list_favorite_products_unauthorized():
+    app.state.testing = True
     with TestClient(app) as client:
         response = client.get("/favorite-product/")
         assert response.status_code == 401
         assert response.json()['detail'] == "Unauthorized"
 
 def test_list_favorite_products():
+    app.state.testing = True
     app.dependency_overrides[favorite_product_service] = override_favorite_product_service
     with TestClient(app) as client:
         response = client.post("/client/", json={"name": "Usuário", "email": "user@example.com", "password": "password"}) # cria usuário
@@ -88,6 +92,7 @@ def test_list_favorite_products():
             assert 'rating' in item
 
 def test_list_favorite_products_cannot_see_list_from_another_user():
+    app.state.testing = True
     app.dependency_overrides[favorite_product_service] = override_favorite_product_service
     with TestClient(app) as client:
         response = client.post("/client/", json={"name": "Usuário", "email": "user.1@example.com", "password": "password"}) # cria usuário
@@ -114,6 +119,7 @@ def test_list_favorite_products_cannot_see_list_from_another_user():
         assert len(data) == 1
 
 def test_delete_favorite_product_unauthorized():
+    app.state.testing = True
     app.dependency_overrides[favorite_product_service] = override_favorite_product_service
     with TestClient(app) as client:
         response = client.delete("/favorite-product/by-product-id/1")
@@ -121,6 +127,7 @@ def test_delete_favorite_product_unauthorized():
         assert response.json()['detail'] == "Unauthorized"
 
 def test_delete_favorite_product():
+    app.state.testing = True
     app.dependency_overrides[favorite_product_service] = override_favorite_product_service
     with TestClient(app) as client:
         response = client.post("/client/", json={"name": "Usuário", "email": "user@example.com", "password": "password"}) # cria usuário
@@ -139,6 +146,7 @@ def test_delete_favorite_product():
         assert len(data) == 0
 
 def test_delete_favorite_product_that_isnt_favorited():
+    app.state.testing = True
     app.dependency_overrides[favorite_product_service] = override_favorite_product_service
     with TestClient(app) as client:
         response = client.post("/client/", json={"name": "Usuário", "email": "user@example.com", "password": "password"}) # cria usuário

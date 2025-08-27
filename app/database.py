@@ -8,7 +8,7 @@ import app.config as Config
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
-  is_test = True
+  is_test = getattr(app.state, "testing", False)
   if not is_test:
       generate_schemas = False
       _create_db = False
