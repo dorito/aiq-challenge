@@ -32,5 +32,7 @@
 ## Detalhes de implementação
 - As rotas ligadas a usuários foram feitas sem autenticação ou sistema de roles para adição/remoção de clientes
   - O motivo é tornar mais fácil a validação do que foi feito.
+- As rotas ligadas a produtos foram feitas sem autenticação
+  - O motivo é simular uma experiência 'real' em um app/site quaisquer, onde as pessoas podem ver os produtos sem estarem logados (mas muitas vezes não podem favoritar os mesmos sem ter uma conta).
 - As rotas ligadas a produto possuem um cache de 5 minutos, tanto pra listagem como pro detalhamento de um produto quaisquer
   - Num cenário ideal, esses dados teriam um cache mais inteligente, afim de tornar o mesmo ''quente''; Uma forma de fazer isso seria com o serviço que gera os dados se comunicando com esse serviço aqui (pra aí forçar a atualização do cache), outra com algum outro serviço fazendo pooling dos dados e sendo o gatilho para o cache.
