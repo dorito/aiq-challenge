@@ -11,8 +11,17 @@ fastapi = {extras = ["standard"], version = "^0.116.1"}
 uvicorn = {extras = ["standard"], version = "^0.35.0"}
 pydantic = "^2.11.7"
 tortoise-orm = "^0.25.1"
+aerich = {extras = ["toml"], version = "^0.9.1"}
+asyncpg = "^0.30.0"
+setuptools = "^80.9.0"
+redis = "^6.4.0"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.aerich]
+tortoise_orm = "app.config.TORTOISE_ORM"
+location = "./migrations"
+src_folder = "./."
