@@ -16,6 +16,7 @@
 - Redis como cache
 - TortoiseORM como ORM
 - PostgreSQL como banco de dados
+- Pytest para os testes
 
 ## Estrutura do projeto
 - Pasta `app`: possui coisas ligadas a configuração de cache, API, database e middlewares
