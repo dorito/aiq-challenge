@@ -11,6 +11,12 @@
 ## Como rodar os testes
 - Execute o seguinte comando: `docker exec -ti aiq_challenge_api pytest`
 
+## Tecnologias utilizadas
+- FastAPI para servir os endpoints de maneira assíncrona
+- Redis como cache
+- TortoiseORM como ORM
+- PostgreSQL como banco de dados
+
 ## Estrutura do projeto
 - Pasta `app`: possui coisas ligadas a configuração de cache, API, database e middlewares
 - Pasta `data`: possui os modelos de data (na pasta `models`), os schemas (na pasta `schemas`) e os enums (na pasta `enums`)
