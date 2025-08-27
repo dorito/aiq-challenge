@@ -10,7 +10,7 @@ class ProductService:
 
     async def list_products(self):
         cache_key = "all_products"
-        cache_ttl = 60*5
+        cache_ttl = 60*5 # 5 minutos de cache
         cached_data = await self._cache.get(cache_key)
         if cached_data:
             return json.loads(cached_data)
@@ -24,7 +24,7 @@ class ProductService:
     
     async def get_product(self, id: int) -> ProductSchema:
         cache_key = f"product_{id}"
-        cache_ttl = 60*5
+        cache_ttl = 60*5 # 5 minutos de cache
         cached_data = await self._cache.get(cache_key)
         if cached_data:
             return ProductSchema(**json.loads(cached_data))
