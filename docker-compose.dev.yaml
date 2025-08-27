@@ -11,6 +11,7 @@ services:
     restart: always
 
   api:
+    container_name: 'aiq_challenge_api'
     restart: always
     depends_on:
       database:

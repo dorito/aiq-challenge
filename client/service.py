@@ -25,7 +25,7 @@ class ClientService:
       if await self.get_client(email=client_data.email):
           raise HTTPException(status_code=400, detail="Email already registered")
       hashed_password = await self._get_hashed_password(client_data.password)
-      client = ClientModel(**client_data.dict(), hashed_password=hashed_password)
+      client = ClientModel(**client_data.model_dump(), hashed_password=hashed_password)
       await client.save()
       return client
 

@@ -1,7 +1,7 @@
-from fastapi import FastAPI
 from client.routes import client_router
 from product.routes import product_router
 from favorite_product.routes import favorite_product_router
+from fastapi import FastAPI
 from tortoise.contrib.fastapi import tortoise_exception_handlers
 from app.lifespan import AppLifespans
 
